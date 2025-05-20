@@ -17,9 +17,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Elegance Market | Premium Shopping Experience",
+  title: "Othaim Market | Premium Shopping Experience",
   description: "Discover quality products at competitive prices with our modern e-commerce platform",
-  keywords: ["e-commerce", "shopping", "online store", "products", "elegance market"],
+  keywords: ["e-commerce", "shopping", "online store", "products", "Othaim market"],
   authors: [{ name: "Othaim" }],
 }
 export const viewport = {

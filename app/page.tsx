@@ -7,7 +7,7 @@ import { getCategories } from "@/lib/api"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Elegance Market | Browse Products",
+  title: "Othaim Market | Browse Products",
   description: "Browse our collection of high-quality products at competitive prices",
 }
 

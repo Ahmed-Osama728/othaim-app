@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import OrderConfirmation from "@/components/order/order-confirmation"
 
 export const metadata: Metadata = {
-  title: "Order Confirmation | Elegance Market",
+  title: "Order Confirmation | Othaim Market",
   description: "Thank you for your order",
 }
 

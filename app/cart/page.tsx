@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import CartContent from "@/components/cart/cart-content"
 
 export const metadata: Metadata = {
-  title: "Your Shopping Cart | Elegance Market",
+  title: "Your Shopping Cart | Othaim Market",
   description: "View and manage items in your shopping cart",
 }
 

@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="font-bold text-lg mb-4">
-              <span className="text-primary">Elegance</span> Market
+              <span className="text-primary">Othaim</span> Market
             </h3>
             <p className="text-muted-foreground">Your premium shopping destination for quality products.</p>
           </div>
@@ -72,7 +72,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Elegance Market. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Othaim Market. All rights reserved.</p>
         </div>
       </div>
     </footer>
