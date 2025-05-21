@@ -1,20 +1,21 @@
 import { getProducts } from "@/lib/api"
 import ProductCard from "./product-card"
-import type { Product } from "@/lib/types"
 import { notFound } from "next/navigation"
+import type { Product } from "@/lib/types"
 
 interface ProductListProps {
-  searchParams?: { q?: string; category?: string }
+  params?: {
+    q?: string
+    category?: string
+  }
 }
 
-export default async function ProductList({
-  searchParams,
-}: ProductListProps = {}) {
+export default async function ProductList({ params }: ProductListProps = {}) {
   try {
     const products = await getProducts()
 
-    // Filter products based on search query and category
-    const filteredProducts = filterProducts(products, searchParams)
+    // Filter products based on params
+    const filteredProducts = filterProducts(products, params)
 
     if (filteredProducts.length === 0) {
       return (
@@ -47,29 +48,22 @@ export default async function ProductList({
   }
 }
 
-function filterProducts(products: Product[], searchParams?: { q?: string; category?: string }): Product[] {
-  if (!searchParams) return products
-
-  let searchQuery: string | undefined;
-  let filterCategory: string | undefined;
-
-  if (searchParams) {
-    searchQuery = searchParams.q;
-    filterCategory = searchParams.category;
-  }
+// Helper function to filter products
+function filterProducts(products: Product[], params?: { q?: string; category?: string }): Product[] {
+  if (!params) return products
 
   return products.filter((product) => {
     // Filter by search query
     if (
-      searchQuery &&
-      !product.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      !product.description.toLowerCase().includes(searchQuery.toLowerCase())
+      params.q &&
+      !product.title.toLowerCase().includes(params.q.toLowerCase()) &&
+      !product.description.toLowerCase().includes(params.q.toLowerCase())
     ) {
       return false
     }
 
     // Filter by category
-    if (filterCategory && product.category.toLowerCase() !== filterCategory.toLowerCase()) {
+    if (params.category && product.category.toLowerCase() !== params.category.toLowerCase()) {
       return false
     }
 

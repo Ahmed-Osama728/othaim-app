@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils"
 
 interface CategoryFilterProps {
   categories: string[]
-  selectedCategory?: string
 }
 
-export default function CategoryFilter({ categories, selectedCategory }: CategoryFilterProps) {
+export default function CategoryFilter({ categories }: CategoryFilterProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const selectedCategory = searchParams.get("category") || undefined
 
   const handleCategoryClick = (category: string | null) => {
     const params = new URLSearchParams(searchParams.toString())

@@ -19,13 +19,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Othaim Market | Premium Shopping Experience",
   description: "Discover quality products at competitive prices with our modern e-commerce platform",
-  keywords: ["e-commerce", "shopping", "online store", "products", "Othaim market"],
+  keywords: ["e-commerce", "shopping", "online store", "products", "othaim market"],
   authors: [{ name: "Othaim" }],
-}
-export const viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
+  viewport: "width=device-width, initial-scale=1",
 }
 
 export default function RootLayout({
@@ -35,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <StoreProvider>
             <div className="flex min-h-screen flex-col">
@@ -45,7 +41,9 @@ export default function RootLayout({
               <div className="flex-1">{children}</div>
               <Footer />
             </div>
-            <NetworkStatus />
+            <Suspense fallback={null}>
+              <NetworkStatus />
+            </Suspense>
             <Toaster />
           </StoreProvider>
         </ThemeProvider>
