@@ -21,9 +21,8 @@ export const metadata: Metadata = {
   description: "Discover quality products at competitive prices with our modern e-commerce platform",
   keywords: ["e-commerce", "shopping", "online store", "products", "othaim market"],
   authors: [{ name: "Othaim" }],
-  viewport: "width=device-width, initial-scale=1",
 }
-
+export const viewport = "width=device-width, initial-scale=1"
 export default function RootLayout({
   children,
 }: Readonly<{

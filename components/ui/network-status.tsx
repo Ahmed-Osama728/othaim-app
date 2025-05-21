@@ -11,7 +11,6 @@ export default function NetworkStatus() {
   const { toast } = useToast()
 
   useEffect(() => {
-    // Set mounted state
     setIsMounted(true)
 
     setIsOnline(navigator.onLine)

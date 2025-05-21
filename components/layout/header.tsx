@@ -12,19 +12,37 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ThemeToggle } from "@/components/theme-toggle"
 import SearchBar from "@/components/filters/search-bar"
 import { cn } from "@/lib/utils"
+import { LoadingSpinner } from "@/components/ui/loading-spinner"
 
 export default function Header() {
-  const { cart } = useCartStore()
+  const { cart, getCartItemCount } = useCartStore()
   const [cartItemCount, setCartItemCount] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const pathname = usePathname()
-  // We're using useSearchParams in this client component
   const searchParams = useSearchParams()
+
+  // Initialize Zustand store and handle cart sync
+  useEffect(() => {
+    // Rehydrate the store
+    const unsubHydrate = useCartStore.persist.onHydrate(() => {
+      setIsLoading(false)
+    })
+
+    // Force rehydration
+    useCartStore.persist.rehydrate()
+
+    return () => {
+      unsubHydrate()
+    }
+  }, [])
 
   // Update cart item count when cart changes
   useEffect(() => {
-    setCartItemCount(cart.reduce((total, item) => total + item.quantity, 0))
-  }, [cart])
+    if (!isLoading) {
+      setCartItemCount(getCartItemCount())
+    }
+  }, [cart, getCartItemCount, isLoading])
 
   // Handle scroll event to change header appearance
   useEffect(() => {
@@ -75,21 +93,27 @@ export default function Header() {
           <ThemeToggle />
           <Link href="/cart">
             <Button variant="outline" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              <AnimatePresence>
-                {cartItemCount > 0 && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className="absolute -top-2 -right-2"
-                  >
-                    <Badge variant="destructive" className="h-5 min-w-5 px-1">
-                      {cartItemCount}
-                    </Badge>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {isLoading ? (
+                <LoadingSpinner size="sm" className="h-4 w-4" />
+              ) : (
+                <>
+                  <ShoppingCart className="h-5 w-5" />
+                  <AnimatePresence>
+                    {cartItemCount > 0 && (
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        className="absolute -top-2 -right-2"
+                      >
+                        <Badge variant="destructive" className="h-5 min-w-5 px-1">
+                          {cartItemCount}
+                        </Badge>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
+              )}
             </Button>
           </Link>
         </div>
@@ -99,21 +123,27 @@ export default function Header() {
           <ThemeToggle />
           <Link href="/cart">
             <Button variant="outline" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              <AnimatePresence>
-                {cartItemCount > 0 && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className="absolute -top-2 -right-2"
-                  >
-                    <Badge variant="destructive" className="h-5 min-w-5 px-1">
-                      {cartItemCount}
-                    </Badge>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {isLoading ? (
+                <LoadingSpinner size="sm" className="h-4 w-4" />
+              ) : (
+                <>
+                  <ShoppingCart className="h-5 w-5" />
+                  <AnimatePresence>
+                    {cartItemCount > 0 && (
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        className="absolute -top-2 -right-2"
+                      >
+                        <Badge variant="destructive" className="h-5 min-w-5 px-1">
+                          {cartItemCount}
+                        </Badge>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
+              )}
             </Button>
           </Link>
           <Sheet>
