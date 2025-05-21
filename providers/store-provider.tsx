@@ -16,7 +16,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     }
 
     const handleOnline = () => {
-      console.log("App is online, syncing with remote API...")
       syncWithRemoteAPI()
     }
 

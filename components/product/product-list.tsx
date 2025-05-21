@@ -43,7 +43,6 @@ export default async function ProductList({ params }: ProductListProps = {}) {
       </div>
     )
   } catch (error) {
-    console.error("Error loading products:", error)
     notFound()
   }
 }
