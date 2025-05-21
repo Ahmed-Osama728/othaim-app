@@ -1,19 +1,20 @@
 "use client"
 
 import type React from "react"
-
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { syncWithRemoteAPI } from "@/lib/api"
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
+  const [isMounted, setIsMounted] = useState(false)
+
   // Sync with remote API when online
   useEffect(() => {
-    // Initial sync when component mounts
+    setIsMounted(true)
+
     if (typeof navigator !== "undefined" && navigator.onLine) {
       syncWithRemoteAPI()
     }
 
-    // Set up event listeners for online/offline status
     const handleOnline = () => {
       console.log("App is online, syncing with remote API...")
       syncWithRemoteAPI()
@@ -27,6 +28,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       }
     }
   }, [])
+
+  if (!isMounted) {
+    return null
+  }
 
   return <>{children}</>
 }

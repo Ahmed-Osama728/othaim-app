@@ -25,7 +25,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "@/components/ui/separator"
 
 export default function CartContent() {
-  const { cart, removeFromCart, updateQuantity, clearCart } = useCartStore()
+  const { cart, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCartStore()
   const { createOrder } = useOrderStore()
   const [isClient, setIsClient] = useState(false)
   const router = useRouter()
@@ -33,7 +33,10 @@ export default function CartContent() {
   const [productToRemove, setProductToRemove] = useState<number | null>(null)
   const [isCheckingOut, setIsCheckingOut] = useState(false)
 
+  // Initialize Zustand stores on the client side to avoid hydration mismatch warnings
   useEffect(() => {
+    useCartStore.persist.rehydrate()
+    useOrderStore.persist.rehydrate()
     setIsClient(true)
   }, [])
 
@@ -41,7 +44,7 @@ export default function CartContent() {
     try {
       setIsCheckingOut(true)
       // Calculate total amount
-      const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0)
+      const totalAmount = getCartTotal()
 
       // Create order
       createOrder(cart, totalAmount)
@@ -70,8 +73,8 @@ export default function CartContent() {
     }
   }
 
-  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0)
-  const totalItems = cart.reduce((total, item) => total + item.quantity, 0)
+  const totalAmount = isClient ? getCartTotal() : 0
+  const totalItems = isClient ? cart.reduce((total, item) => total + item.quantity, 0) : 0
 
   if (!isClient) {
     return (

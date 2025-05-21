@@ -7,13 +7,15 @@ import { useToast } from "@/components/ui/use-toast"
 
 export default function NetworkStatus() {
   const [isOnline, setIsOnline] = useState(true)
+  const [isMounted, setIsMounted] = useState(false)
   const { toast } = useToast()
 
   useEffect(() => {
-    // Set initial online status
+    // Set mounted state
+    setIsMounted(true)
+
     setIsOnline(navigator.onLine)
 
-    // Handle online status changes
     const handleOnline = () => {
       setIsOnline(true)
       toast({
@@ -41,6 +43,9 @@ export default function NetworkStatus() {
       window.removeEventListener("offline", handleOffline)
     }
   }, [toast])
+
+  // Don't render anything during SSR or until mounted
+  if (!isMounted) return null
 
   if (isOnline) return null
 

@@ -45,6 +45,7 @@ export const useOrderStore = create<OrderState>()(
     }),
     {
       name: "order-storage",
+      skipHydration: true, 
     },
   ),
 )

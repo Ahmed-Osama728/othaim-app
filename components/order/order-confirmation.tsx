@@ -16,6 +16,8 @@ export default function OrderConfirmation() {
   const router = useRouter()
 
   useEffect(() => {
+    // Initialize Zustand store on the client side to avoid hydration mismatch warnings
+    useOrderStore.persist.rehydrate()
     setIsClient(true)
   }, [])
 

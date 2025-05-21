@@ -52,9 +52,15 @@ export const useCartStore = create<CartState>()(
         const { cart } = get()
         return cart.reduce((total, item) => total + item.price * item.quantity, 0)
       },
+
+      getCartItemCount: () => {
+        const { cart } = get()
+        return cart.reduce((total, item) => total + item.quantity, 0)
+      },
     }),
     {
       name: "cart-storage",
+      skipHydration: true, // to prevent hydration mismatch
     },
   ),
 )
