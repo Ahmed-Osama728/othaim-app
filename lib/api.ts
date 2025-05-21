@@ -1,8 +1,8 @@
 import type { Product } from "./types"
+import { toast } from "@/components/ui/use-toast"
 
 const API_URL = "https://fakestoreapi.com"
 
-// Function to fetch products from the API
 export async function getProducts(): Promise<Product[]> {
   try {
     // Check if we have cached products and they're not expired
@@ -23,12 +23,17 @@ export async function getProducts(): Promise<Product[]> {
 
     const products = await response.json()
 
-    // Cache the products
     cacheProducts(products)
 
     return products
   } catch (error) {
-    console.error("Error fetching products:", error)
+    if (typeof window !== "undefined") {
+      toast({
+        title: "Error loading products",
+        description: "Could not load products. Please try again later.",
+        variant: "destructive",
+      })
+    }
 
     // If we're offline, try to get from cache as fallback
     const cachedData = getCachedProducts()
@@ -40,17 +45,14 @@ export async function getProducts(): Promise<Product[]> {
   }
 }
 
-// Function to get product categories
 export async function getCategories(): Promise<string[]> {
   try {
-    // Check if we have cached categories
     const cachedCategories = getCachedCategories()
 
     if (cachedCategories) {
       return cachedCategories
     }
 
-    // If no cache, fetch from API
     const response = await fetch(`${API_URL}/products/categories`, {
       next: { revalidate: 86400 }, // Revalidate every day
     })
@@ -61,28 +63,29 @@ export async function getCategories(): Promise<string[]> {
 
     const categories = await response.json()
 
-    // Cache the categories
     cacheCategories(categories)
 
     return categories
   } catch (error) {
-    console.error("Error fetching categories:", error)
+    if (typeof window !== "undefined") {
+      toast({
+        title: "Error loading categories",
+        description: "Could not load product categories. Please try again later.",
+        variant: "destructive",
+      })
+    }
 
-    // If we're offline, try to get from cache as fallback
     const cachedCategories = getCachedCategories()
     if (cachedCategories) {
       return cachedCategories
     }
 
-    // If no cache, return empty array
     return []
   }
 }
 
-// Function to get a single product by ID
 export async function getProduct(id: number): Promise<Product> {
   try {
-    // Check if we have cached products
     const cachedProducts = getCachedProducts()
 
     if (cachedProducts) {
@@ -92,7 +95,6 @@ export async function getProduct(id: number): Promise<Product> {
       }
     }
 
-    // If no cache or product not in cache, fetch from API
     const response = await fetch(`${API_URL}/products/${id}`, {
       next: { revalidate: 3600 }, // Revalidate every hour
     })
@@ -103,12 +105,18 @@ export async function getProduct(id: number): Promise<Product> {
 
     return await response.json()
   } catch (error) {
-    console.error(`Error fetching product ${id}:`, error)
+    if (typeof window !== "undefined") {
+      toast({
+        title: "Error loading product",
+        description: `Could not load product details for ID: ${id}. Please try again later.`,
+        variant: "destructive",
+      })
+    }
+
     throw error
   }
 }
 
-// Function to cache products in localStorage
 function cacheProducts(products: Product[]): void {
   if (typeof window === "undefined") return
 
@@ -123,7 +131,6 @@ function cacheProducts(products: Product[]): void {
   }
 }
 
-// Function to get cached products from localStorage
 function getCachedProducts(): Product[] | null {
   if (typeof window === "undefined") return null
 
@@ -135,7 +142,7 @@ function getCachedProducts(): Product[] | null {
     const { products, timestamp } = JSON.parse(cachedData)
 
     // Check if cache is expired (24 hours)
-    const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours
+    const CACHE_DURATION = 24 * 60 * 60 * 1000 
     if (Date.now() - timestamp > CACHE_DURATION) {
       localStorage.removeItem("cachedProducts")
       return null
@@ -148,7 +155,6 @@ function getCachedProducts(): Product[] | null {
   }
 }
 
-// Function to cache categories in localStorage
 function cacheCategories(categories: string[]): void {
   if (typeof window === "undefined") return
 
@@ -163,7 +169,6 @@ function cacheCategories(categories: string[]): void {
   }
 }
 
-// Function to get cached categories from localStorage
 function getCachedCategories(): string[] | null {
   if (typeof window === "undefined") return null
 
@@ -188,27 +193,31 @@ function getCachedCategories(): string[] | null {
   }
 }
 
-// Function to sync local data with remote API
 export async function syncWithRemoteAPI(): Promise<void> {
   if (typeof window === "undefined" || !navigator.onLine) return
 
   try {
-    // Fetch fresh products data
     const productsResponse = await fetch(`${API_URL}/products`)
     if (productsResponse.ok) {
       const products = await productsResponse.json()
       cacheProducts(products)
+    } else {
+      throw new Error(`Failed to sync products: ${productsResponse.status}`)
     }
 
-    // Fetch fresh categories data
     const categoriesResponse = await fetch(`${API_URL}/products/categories`)
     if (categoriesResponse.ok) {
       const categories = await categoriesResponse.json()
       cacheCategories(categories)
+    } else {
+      throw new Error(`Failed to sync categories: ${categoriesResponse.status}`)
     }
 
-    console.log("Successfully synced with remote API")
   } catch (error) {
-    console.error("Error syncing with remote API:", error)
+    toast({
+      title: "Sync failed",
+      description: "Could not sync with the server. Some data may be outdated.",
+      variant: "destructive",
+    })
   }
 }
