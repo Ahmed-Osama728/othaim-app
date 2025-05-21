@@ -90,7 +90,7 @@
 
 /* Category badge colors */
 .category-badge-electronics {
-  @apply bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300;
+  @apply bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-900;
 }
 
 .category-badge-jewelery {
