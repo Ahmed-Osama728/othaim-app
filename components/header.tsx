@@ -28,7 +28,6 @@ export default function Header() {
     }
   }, [searchParams])
 
-  // Update cart item count when cart changes
   useEffect(() => {
     setCartItemCount(cart.reduce((total, item) => total + item.quantity, 0))
   }, [cart])

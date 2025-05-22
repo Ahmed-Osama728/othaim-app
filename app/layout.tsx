@@ -1,28 +1,31 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import { Suspense } from "react"
-import "./globals.css"
-import Header from "@/components/layout/header"
-import { Toaster } from "@/components/ui/toaster"
-import { StoreProvider } from "@/providers/store-provider"
-import { ThemeProvider } from "@/providers/theme-provider"
-import Footer from "@/components/layout/footer"
-import NetworkStatus from "@/components/ui/network-status"
+import type React from "react";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { Suspense } from "react";
+import "./globals.css";
+import Header from "@/components/layout/header";
+import { Toaster } from "@/components/ui/toaster";
+import { StoreProvider } from "@/providers/store-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
+import Footer from "@/components/layout/footer";
+import NetworkStatus from "@/components/ui/network-status";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
-})
+  fallback: ["system-ui", "Arial", "sans-serif"], 
+    preload: true,
+  adjustFontFallback: true, 
+});
 
 export const metadata: Metadata = {
   title: "Othaim Market | Premium Shopping Experience",
   description: "Discover quality products at competitive prices with our modern e-commerce platform",
   keywords: ["e-commerce", "shopping", "online store", "products", "othaim market"],
   authors: [{ name: "Othaim" }],
-}
-export const viewport = "width=device-width, initial-scale=1"
+};
+export const viewport = "width=device-width, initial-scale=1";
 export default function RootLayout({
   children,
 }: Readonly<{

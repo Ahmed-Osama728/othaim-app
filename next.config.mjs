@@ -7,8 +7,10 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    domains: ['fakestoreapi.com'],
+    minimumCacheTTL: 60,
   },
-}
+  optimizeFonts: true,
+};
 
-export default nextConfig
+export default nextConfig;
