@@ -19,10 +19,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useRouter } from "next/navigation"
-import { useToast } from "@/components/ui/use-toast"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { useToast } from "@/hooks/use-toast"
 
 export default function CartContent() {
   const { cart, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCartStore()
@@ -43,23 +43,18 @@ export default function CartContent() {
   const handleCheckout = () => {
     try {
       setIsCheckingOut(true)
-      // Calculate total amount
       const totalAmount = getCartTotal()
 
-      // Create order
       createOrder(cart, totalAmount)
 
-      // Clear cart
       clearCart()
 
-      // Show success toast
       toast({
         title: "Order placed successfully!",
         description: "Your order has been placed and is being processed.",
         variant: "default",
       })
 
-      // Redirect to confirmation page
       router.push("/confirmation")
     } catch (error) {
       console.error("Checkout error:", error)

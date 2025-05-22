@@ -1,34 +1,34 @@
-"use client"
+"use client";
 
-import type { Product } from "@/lib/types"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { ShoppingCart, Star } from "lucide-react"
-import { useCartStore } from "@/store/cart-store"
-import { formatCurrency } from "@/lib/utils"
-import { useToast } from "@/components/ui/use-toast"
-import { motion } from "framer-motion"
-import { useState } from "react"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import type { Product } from "@/lib/types";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart, Star, ImageOff } from "lucide-react";
+import { useCartStore } from "@/store/cart-store";
+import { formatCurrency } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
-  product: Product
+  product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { addToCart } = useCartStore()
-  const { toast } = useToast()
-  const [isHovered, setIsHovered] = useState(false)
-  const [imageError, setImageError] = useState(false)
+  const { addToCart } = useCartStore();
+  const { toast } = useToast();
+  const [isHovered, setIsHovered] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   const handleAddToCart = () => {
-    addToCart(product)
+    addToCart(product);
     toast({
       title: "Added to cart",
       description: `${product.title} has been added to your cart.`,
-    })
-  }
+    });
+  };
 
   return (
     <motion.div
@@ -48,18 +48,27 @@ export default function ProductCard({ product }: ProductCardProps) {
             transition={{ duration: 0.3 }}
             className="h-full w-full relative"
           >
-            <Image
-              src={imageError ? "/placeholder.svg" : product.image}
-              alt={product.title}
-              fill
-              className="object-contain p-4"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority
-              onError={() => setImageError(true)}
-            />
+            <>
+              {isImageLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-muted/10">
+                  <div className="h-8 w-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+              <Image
+                src={product.image || "/public/placeholder-logo.svg"}
+                alt={product.title}
+                fill
+                className="object-contain p-4"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority
+                onLoad={() => setIsImageLoading(false)}
+              />
+            </>
           </motion.div>
           <Badge
-            className={`absolute top-2 left-2 bg-primary/90 hover:bg-primary rounded-full px-3 category-badge-${product.category.split(" ")[0].toLowerCase()}`}
+            className={`absolute top-2 left-2 bg-primary/90 hover:bg-primary rounded-full px-3 category-badge-${product.category
+              .split(" ")[0]
+              .toLowerCase()}`}
           >
             {product.category}
           </Badge>
@@ -69,16 +78,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
-                className={`h-4 w-4 ${
-                  i < Math.round(product.rating.rate) ? "text-yellow-500 fill-yellow-500" : "text-gray-300"
-                }`}
+                className={`h-4 w-4 ${i < Math.round(product.rating.rate) ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`}
               />
             ))}
             <span className="text-xs text-muted-foreground ml-1">({product.rating.count})</span>
           </div>
-          <h3 className="font-medium line-clamp-2 mb-2 text-lg group-hover:text-primary transition-colors">
-            {product.title}
-          </h3>
+          <h3 className="font-medium line-clamp-2 mb-2 text-lg group-hover:text-primary transition-colors">{product.title}</h3>
           <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{product.description}</p>
         </CardContent>
         <CardFooter className="p-4 pt-0 mt-auto">
@@ -92,5 +97,5 @@ export default function ProductCard({ product }: ProductCardProps) {
         </CardFooter>
       </Card>
     </motion.div>
-  )
+  );
 }

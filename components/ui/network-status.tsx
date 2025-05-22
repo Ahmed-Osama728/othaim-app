@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { WifiOff } from "lucide-react"
 import { syncWithRemoteAPI } from "@/lib/api"
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/hooks/use-toast"
 
 export default function NetworkStatus() {
   const [isOnline, setIsOnline] = useState(true)

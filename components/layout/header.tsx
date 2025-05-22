@@ -44,7 +44,6 @@ export default function Header() {
     }
   }, [cart, getCartItemCount, isLoading])
 
-  // Handle scroll event to change header appearance
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)

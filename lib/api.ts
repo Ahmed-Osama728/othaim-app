@@ -1,5 +1,5 @@
+import { toast } from "@/hooks/use-toast"
 import type { Product } from "./types"
-import { toast } from "@/components/ui/use-toast"
 
 const API_URL = "https://fakestoreapi.com"
 
