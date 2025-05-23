@@ -13,24 +13,24 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 142 76% 36%;
-    --primary-foreground: 355.7 100% 97.3%;
+    --primary: 142 76% 30%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
 
     --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted-foreground: 240 3.8% 40%;
 
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84.2% 50%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 142 76% 36%;
+    --ring: 142 76% 30%;
 
     --radius: 0.8rem;
   }
@@ -45,24 +45,24 @@
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 142 70% 50%;
-    --primary-foreground: 144.9 80.4% 10%;
+    --primary: 142 70% 60%;
+    --primary-foreground: 0 0% 0%;
 
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 0 0% 15%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted-foreground: 240 5% 75%;
 
     --accent: 12 6.5% 15.1%;
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 85.7% 97.3%;
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 142 76% 36%;
+    --ring: 142 76% 60%;
   }
 }
 
@@ -73,15 +73,42 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    /* Comprehensive system font fallback stack */
+
     font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
       Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
+
+  h1 {
+    @apply text-3xl font-bold mb-6;
+  }
+  h2 {
+    @apply text-2xl font-semibold mb-4;
+  }
+  h3 {
+    @apply text-xl font-medium mb-3;
+  }
+  h4 {
+    @apply text-lg font-medium mb-2;
+  }
+  h5 {
+    @apply text-base font-medium mb-2;
+  }
+  h6 {
+    @apply text-sm font-medium mb-2;
+  }
 }
 
-/* Custom button gradient styles */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 23%;
+  line-gap-override: normal;
+}
+
 .btn-gradient {
-  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.9) 100%);
   transition: all 0.3s ease;
 }
 
@@ -91,24 +118,22 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Category badge colors */
 .category-badge-electronics {
-  @apply bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-900;
+  @apply bg-blue-200 text-blue-800 dark:bg-blue-800 dark:text-blue-100;
 }
 
 .category-badge-jewelery {
-  @apply bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-900;
+  @apply bg-purple-200 text-purple-800 dark:bg-purple-800 dark:text-purple-100;
 }
 
 .category-badge-men {
-  @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300;
+  @apply bg-emerald-200 text-emerald-800 dark:bg-emerald-800 dark:text-emerald-100;
 }
 
 .category-badge-women {
-  @apply bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300;
+  @apply bg-rose-200 text-rose-800 dark:bg-rose-800 dark:text-rose-100;
 }
 
-/* Custom animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -137,7 +162,6 @@
   animation: slideUp 0.5s ease-out;
 }
 
-/* Card hover effects */
 .card-hover-effect {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -147,18 +171,15 @@
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Improved focus styles for accessibility */
 :focus-visible {
   outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
 }
 
-/* Offline mode styles */
 .offline-mode {
   filter: grayscale(0.3);
 }
 
-/* Fallback image styles */
 .image-fallback {
   background-color: #f0f0f0;
   display: flex;

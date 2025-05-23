@@ -63,23 +63,24 @@ export default function Header() {
         "sticky top-0 z-50 w-full transition-all duration-200",
         isScrolled ? "bg-background/95 backdrop-blur-md shadow-md" : "bg-background border-b",
       )}
+      role="banner"
     >
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="font-bold text-xl">
-            <span className="text-primary">Othaim</span> Market
+          <Link href="/" className="font-bold text-xl text-foreground">
+            <span className="text-primary font-bold">Othaim</span> Market
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all hover:after:w-full",
-                  pathname === link.href ? "text-primary after:w-full" : "text-muted-foreground",
+                  pathname === link.href ? "text-primary after:w-full" : "text-foreground",
                 )}
+                aria-current={pathname === link.href ? "page" : undefined}
               >
                 {link.label}
               </Link>
@@ -91,12 +92,17 @@ export default function Header() {
           <SearchBar />
           <ThemeToggle />
           <Link href="/cart">
-            <Button variant="outline" size="icon" className="relative">
+            <Button
+              variant="outline"
+              size="icon"
+              className="relative"
+              aria-label={`Shopping cart with ${cartItemCount} items`}
+            >
               {isLoading ? (
                 <LoadingSpinner size="sm" className="h-4 w-4" />
               ) : (
                 <>
-                  <ShoppingCart className="h-5 w-5" />
+                  <ShoppingCart className="h-5 w-5" aria-hidden="true" />
                   <AnimatePresence>
                     {cartItemCount > 0 && (
                       <motion.div
@@ -121,12 +127,17 @@ export default function Header() {
         <div className="flex items-center gap-4 md:hidden">
           <ThemeToggle />
           <Link href="/cart">
-            <Button variant="outline" size="icon" className="relative">
+            <Button
+              variant="outline"
+              size="icon"
+              className="relative"
+              aria-label={`Shopping cart with ${cartItemCount} items`}
+            >
               {isLoading ? (
                 <LoadingSpinner size="sm" className="h-4 w-4" />
               ) : (
                 <>
-                  <ShoppingCart className="h-5 w-5" />
+                  <ShoppingCart className="h-5 w-5" aria-hidden="true" />
                   <AnimatePresence>
                     {cartItemCount > 0 && (
                       <motion.div
@@ -147,21 +158,31 @@ export default function Header() {
           </Link>
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-5 w-5" />
+              <Button variant="ghost" size="icon" aria-label="Open menu">
+                <Menu className="h-5 w-5" aria-hidden="true" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
-              <div className="flex flex-col gap-6 mt-6">
-                <SearchBar />
-                <Link href="/" className="text-lg font-medium transition-colors hover:text-primary">
-                  Home
-                </Link>
-                <Link href="/cart" className="text-lg font-medium transition-colors hover:text-primary">
-                  Cart
-                </Link>
-              </div>
+              <nav aria-label="Mobile navigation">
+                <div className="flex flex-col gap-6 mt-6">
+                  <SearchBar />
+                  <Link
+                    href="/"
+                    className="text-lg font-medium transition-colors hover:text-primary text-foreground"
+                    aria-current={pathname === "/" ? "page" : undefined}
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    href="/cart"
+                    className="text-lg font-medium transition-colors hover:text-primary text-foreground"
+                    aria-current={pathname === "/cart" ? "page" : undefined}
+                  >
+                    Cart
+                  </Link>
+                </div>
+              </nav>
             </SheetContent>
           </Sheet>
         </div>

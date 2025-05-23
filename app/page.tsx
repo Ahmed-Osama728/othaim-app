@@ -16,6 +16,7 @@ export default async function Home() {
 
   return (
     <main className="container mx-auto px-4 py-8">
+      <h1 className="sr-only">Othaim Market - Browse Products</h1>
       <div className="flex flex-col md:flex-row gap-6 mb-8">
         <div className="w-full md:w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-6">
