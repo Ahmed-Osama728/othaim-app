@@ -30,6 +30,19 @@ export default function ProductCard({ product }: ProductCardProps) {
     });
   };
 
+  const getCategoryBadgeClass = (category: string) => {
+    const lowerCategory = category.toLowerCase();
+
+    if (lowerCategory.includes("men")) {
+      return "men";
+    } else if (lowerCategory.includes("women")) {
+      return "women";
+    } else {
+      return lowerCategory; 
+    }
+  };
+
+  const categoryClass = getCategoryBadgeClass(product.category);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -55,20 +68,19 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </div>
               )}
               <Image
-                src={product.image || "/public/placeholder-logo.svg"}
+                src={product.image || "/placeholder.svg?height=200&width=200"}
                 alt={product.title}
                 fill
                 className="object-contain p-4"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                priority
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                priority={false}
+                loading="lazy"
                 onLoad={() => setIsImageLoading(false)}
               />
             </>
           </motion.div>
           <Badge
-            className={`absolute top-2 left-2 bg-primary/90 hover:bg-primary rounded-full px-3 category-badge-${product.category
-              .split(" ")[0]
-              .toLowerCase()}`}
+            className={`absolute top-2 left-2 bg-primary text-primary-foreground hover:bg-primary rounded-full px-3 category-badge-${categoryClass}`}
           >
             {product.category}
           </Badge>
@@ -78,19 +90,32 @@ export default function ProductCard({ product }: ProductCardProps) {
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
-                className={`h-4 w-4 ${i < Math.round(product.rating.rate) ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`}
-              />
+                className={`h-4 w-4 ${
+                  i < Math.round(product.rating.rate) ? "text-yellow-600 fill-yellow-600" : "text-gray-300"
+                }`}
+                aria-hidden="true"
+                />
             ))}
-            <span className="text-xs text-muted-foreground ml-1">({product.rating.count})</span>
+             <span
+              className="text-xs text-foreground ml-1"
+              aria-label={`Rating ${product.rating.rate} out of 5, ${product.rating.count} reviews`}
+            >
+              ({product.rating.count})
+            </span>
           </div>
           <h3 className="font-medium line-clamp-2 mb-2 text-lg group-hover:text-primary transition-colors">{product.title}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{product.description}</p>
+          <p className="text-sm text-foreground line-clamp-2 mb-2">{product.description}</p>
         </CardContent>
         <CardFooter className="p-4 pt-0 mt-auto">
           <div className="flex items-center justify-between w-full">
-            <p className="font-bold text-lg">{formatCurrency(product.price)}</p>
-            <Button size="sm" onClick={handleAddToCart} className="btn-gradient">
-              <ShoppingCart className="h-4 w-4 mr-2" />
+            <p className="font-bold text-lg text-foreground">{formatCurrency(product.price)}</p>
+            <Button
+              size="sm"
+              onClick={handleAddToCart}
+              className="btn-gradient"
+              aria-label={`Add ${product.title} to cart`}
+            >
+              <ShoppingCart className="h-4 w-4 mr-2" aria-hidden="true" />
               Add to Cart
             </Button>
           </div>
