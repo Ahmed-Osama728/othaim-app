@@ -20,13 +20,23 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
   },
   experimental: {
-    optimizeCss: true,
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    optimizePackageImports: ['lucide-react'],
   },
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
       config.optimization.usedExports = true;
       config.optimization.sideEffects = false;
+      
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      };
     }
     return config;
   },
