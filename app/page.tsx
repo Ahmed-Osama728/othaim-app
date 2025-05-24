@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   title: "Othaim Market | Browse Products",
   description: "Browse our collection of high-quality products at competitive prices",
 };
-
 export default async function Home({
   searchParams,
 }: {
@@ -34,7 +33,7 @@ export default async function Home({
         </div>
       )}
 
-      <div className="flex flex-col md:flex-row gap-6 mb-8">
+      <div className="flex flex-col md:flex-row gap-6 mb-8 min-h-[600px]">
         <div className="w-full md:w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-6">
             <div className="md:hidden">
@@ -43,7 +42,7 @@ export default async function Home({
             <CategoryFilter categories={categories} />
           </div>
         </div>
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <Suspense fallback={<ProductListSkeleton />}>
             <ProductListClient products={products} />
           </Suspense>
