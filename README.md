@@ -90,7 +90,7 @@ The application includes comprehensive testing:
 1. Clone the repository
 \`\`\`bash
 git clone https://github.com/Ahmed-Osama728/othaim-app.git
-cd Othaim-market
+cd othaim-app
 \`\`\`
 
 2. Install dependencies
