@@ -49,6 +49,8 @@ export default function HeroBanner() {
   const slideInterval = useRef<NodeJS.Timeout | null>(null)
   const paginationRef = useRef<HTMLDivElement>(null)
   const [isClient, setIsClient] = useState(false)
+  const [touchStartX, setTouchStartX] = useState<number | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
 
   useEffect(() => {
     setIsClient(true)
@@ -114,6 +116,38 @@ export default function HeroBanner() {
     }
   }, [startSlideTimer, handleKeyDown, isClient])
 
+  const dragThreshold = 50; 
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isDragging || touchStartX === null) return;
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const deltaX = touchEndX - touchStartX;
+
+    if (Math.abs(deltaX) > dragThreshold) {
+      if (deltaX > 0) {
+        // Swiped right
+        prevSlide();
+      } else {
+        // Swiped left
+        nextSlide();
+      }
+    }
+
+    setTouchStartX(null);
+    setIsDragging(false);
+  };
+
   if (!isClient) {
     return null
   }
@@ -123,6 +157,9 @@ export default function HeroBanner() {
       className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden rounded-lg shadow-md"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       role="region"
       aria-label="Hero banner image slider"
     >
@@ -148,7 +185,7 @@ export default function HeroBanner() {
                   loading={index === 0 ? "eager" : "lazy"}
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-                  quality={75} // Reduced from default 80 to optimize file size
+                  quality={60} 
                 />
               ) : null}
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
