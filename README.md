@@ -120,44 +120,51 @@ yarn test
 
 \`\`\`
 othaim-app/
-├── __tests__/                    # Test files
-│   ├── api.test.ts              # API functions tests
-│   ├── cart-store.test.ts       # Cart store tests
-│   ├── order-store.test.ts      # Order store tests
-│   └── utils.test.ts            # Utility functions tests
-├── app/                         # Next.js App Router
-│   ├── cart/                    # Cart page
-│   │   └── page.tsx
-│   ├── confirmation/            # Order confirmation page
-│   │   └── page.tsx
-│   ├── globals.css              # Global styles
-│   ├── layout.tsx               # Root layout
-│   ├── loading.tsx              # Global loading component
-│   ├── not-found.tsx            # 404 page
-│   ├── error.tsx                # Error boundary
-│   └── page.tsx                 # Home page
-├── components/                  # Reusable components
-│   ├── banner/                  # Hero banner components
-│   │   ├── hero-banner.tsx
-│   │   
-│   │   
-│   ├── cart/                    # Cart-related components
+│
+├── __tests__/                          # Test files
+│   ├── api.test.ts                     # API functions tests
+│   ├── cart-store.test.ts              # Cart store tests
+│   ├── order-store.test.ts             # Order store tests
+│   └── utils.test.ts                   # Utility functions tests
+│
+├── app/                                # Next.js App Router
+│   ├── cart/
+│   │   └── page.tsx                    # Cart page
+│   ├── confirmation/
+│   │   └── page.tsx                    # Order confirmation page
+│   ├── globals.css                     # Global styles
+│   ├── layout.tsx                      # Root layout
+│   ├── loading.tsx                     # Global loading component
+│   ├── not-found.tsx                   # 404 page
+│   ├── error.tsx                       # Error boundary
+│   └── page.tsx                        # Home page
+│
+├── components/                         # Reusable components
+│   ├── banner/                         # Hero banner components
+│   │   └── hero-banner.tsx
+│   │
+│   ├── cart/                           # Cart-related components
 │   │   └── cart-content.tsx
-│   ├── filters/                 # Search and filter components
+│   │
+│   ├── filters/                        # Search and filter components
 │   │   ├── category-filter.tsx
 │   │   └── search-bar.tsx
-│   ├── layout/                  # Layout components
+│   │
+│   ├── layout/                         # Layout components
 │   │   ├── header.tsx
 │   │   └── footer.tsx
-│   ├── order/                   # Order-related components
+│   │
+│   ├── order/                          # Order-related components
 │   │   └── order-confirmation.tsx
-│   ├── product/                 # Product components
+│   │
+│   ├── product/                        # Product components
 │   │   ├── product-card.tsx
 │   │   ├── product-card-skeleton.tsx
 │   │   ├── product-list.tsx
 │   │   ├── product-list-client.tsx
 │   │   └── product-list-skeleton.tsx
-│   ├── ui/                      # UI components (shadcn/ui)
+│   │
+│   ├── ui/                             # UI components (shadcn/ui)
 │   │   ├── alert.tsx
 │   │   ├── alert-dialog.tsx
 │   │   ├── badge.tsx
@@ -176,35 +183,43 @@ othaim-app/
 │   │   ├── toaster.tsx
 │   │   ├── toggle.tsx
 │   │   └── use-mobile.tsx
-│   ├── error-boundry.tsx        # Error boundary component
-│   ├── theme-provider.tsx       # Theme context provider
-│   └── theme-toggle.tsx         # Theme switcher
-├── hooks/                       # Custom React hooks
-│   └── use-toast.ts            # Toast notification hook
-├── lib/                         # Utility libraries
-│   ├── api.ts                  # API functions with caching
-│   ├── types.ts                # TypeScript type definitions
-│   └── utils.ts                # Utility functions
-├── providers/                   # Context providers
-│   ├── store-provider.tsx      # Store initialization
-│   └── theme-provider.tsx      # Theme provider wrapper
-├── public/                      # Static assets
-│   ├── banner-electronics.webp # Hero banner images
+│   │
+│   ├── error-boundry.tsx               # Error boundary component
+│   ├── theme-provider.tsx              # Theme context provider
+│   └── theme-toggle.tsx                # Theme switcher
+│
+├── hooks/                              # Custom React hooks
+│   └── use-toast.ts                    # Toast notification hook
+│
+├── lib/                                # Utility libraries
+│   ├── api.ts                          # API functions with caching
+│   ├── types.ts                        # TypeScript type definitions
+│   └── utils.ts                        # Utility functions
+│
+├── providers/                          # Context providers
+│   ├── store-provider.tsx              # Store initialization
+│   └── theme-provider.tsx              # Theme provider wrapper
+│
+├── public/                             # Static assets
+│   ├── banner-electronics.webp         # Hero banner images
 │   ├── banner-fashion.webp
 │   ├── banner-jewelery.webp
-│   └── othaim-logo.svg         # Application logo
-├── store/                       # Zustand state management
-│   ├── cart-store.ts           # Shopping cart state
-│   └── order-store.ts          # Order management state
-├── styles/                      # Additional styles
-│   └── globals.css             # Legacy global styles
-├── components.json              # shadcn/ui configuration
-├── next.config.mjs             # Next.js configuration
-├── package.json                # Dependencies and scripts
-├── postcss.config.mjs          # PostCSS configuration
-├── tailwind.config.ts          # Tailwind CSS configuration
-├── tsconfig.json               # TypeScript configuration
-└── vitest.config.mts           # Vitest testing configuration
+│   └── othaim-logo.svg                 # Application logo
+│
+├── store/                              # Zustand state management
+│   ├── cart-store.ts                   # Shopping cart state
+│   └── order-store.ts                  # Order management state
+│
+├── styles/                             # Additional styles
+│   └── globals.css                     # Legacy global styles
+│
+├── components.json                     # shadcn/ui configuration
+├── next.config.mjs                     # Next.js configuration
+├── package.json                        # Dependencies and scripts
+├── postcss.config.mjs                  # PostCSS configuration
+├── tailwind.config.ts                  # Tailwind CSS configuration
+├── tsconfig.json                       # TypeScript configuration
+└── vitest.config.mts                   # Vitest testing configuration
 \`\`\`
 
 ## External Packages
