@@ -13,6 +13,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import SearchBar from "@/components/filters/search-bar"
 import { cn } from "@/lib/utils"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
+import Image from "next/image"
 
 export default function Header() {
   const { cart, getCartItemCount } = useCartStore()
@@ -65,9 +66,10 @@ export default function Header() {
       )}
       role="banner"
     >
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-16 items-center justify-between px-4 sm:px-2 md:px-3">
         <div className="flex items-center gap-6">
-          <Link href="/" className="font-bold text-xl text-foreground">
+          <Link href="/" className="font-bold text-xl text-foreground flex items-center">
+            <Image src="/othaim-logo.svg" alt="Othaim Market Logo" width={32} height={32} className="mr-2" />
             <span className="text-primary font-bold">Othaim</span> Market
           </Link>
 

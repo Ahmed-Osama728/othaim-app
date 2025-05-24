@@ -33,10 +33,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   const getCategoryBadgeClass = (category: string) => {
     const lowerCategory = category.toLowerCase();
 
-    if (lowerCategory.includes("men")) {
-      return "men";
-    } else if (lowerCategory.includes("women")) {
+    if (lowerCategory.includes("women")) {
       return "women";
+    } else if (lowerCategory.includes("men")) {
+      return "men";
     } else {
       return lowerCategory; 
     }

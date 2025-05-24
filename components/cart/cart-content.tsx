@@ -107,7 +107,7 @@ export default function CartContent() {
   }
 
   return (
-    <div className="grid md:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div className="md:col-span-2">
         <Card>
           <CardHeader>
@@ -134,7 +134,7 @@ export default function CartContent() {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-medium truncate">{item.title}</h3>
+                    <h3 className="font-medium">{item.title}</h3>
                     <p className="text-muted-foreground text-sm">{formatCurrency(item.price)}</p>
                     <p className="text-xs text-muted-foreground mt-1">Category: {item.category}</p>
                   </div>
