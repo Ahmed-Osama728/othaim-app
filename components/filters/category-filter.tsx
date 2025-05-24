@@ -33,17 +33,17 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
   }
 
   return (
-    <Card className="shadow-md bg-background/80 backdrop-blur-sm">
+    <Card className="shadow-md bg-background/80 backdrop-blur-sm h-fit">
       <CardHeader className="pb-3">
-        <CardTitle>Categories</CardTitle>
-        <CardDescription>Filter products by category</CardDescription>
+        <CardTitle className="text-lg">Categories</CardTitle>
+        <CardDescription className="text-sm">Filter products by category</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           <Button
             variant={!selectedCategory ? "default" : "outline"}
             className={cn(
-              "justify-start w-full rounded-full transition-all hover:shadow-md",
+              "justify-start w-full rounded-full transition-all hover:shadow-md h-10",
               !selectedCategory ? "bg-primary text-primary-foreground btn-gradient" : "hover:bg-secondary/80",
             )}
             onClick={() => handleCategoryClick(null)}
@@ -55,7 +55,7 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}
               className={cn(
-                "justify-start w-full capitalize rounded-full transition-all hover:shadow-md",
+                "justify-start w-full capitalize rounded-full transition-all hover:shadow-md h-10",
                 selectedCategory === category
                   ? `bg-primary text-primary-foreground btn-gradient category-btn-${category.split(" ")[0].toLowerCase()}`
                   : "hover:bg-secondary/80",
